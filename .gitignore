@@ -5,3 +5,4 @@ coverage
 reports
 npm-debug.log
 *.swp
+dist/*
