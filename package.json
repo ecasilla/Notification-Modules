@@ -1,6 +1,5 @@
 {
   "name": "Notifications",
-
   "version": "0.0.0",
   "description": "A Notification Module for the Client Side",
   "main": "Gruntfile.js",

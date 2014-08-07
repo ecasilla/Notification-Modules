@@ -1,0 +1,1 @@
+var queue = require('../../app/scripts/queue.js');

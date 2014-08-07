@@ -1,10 +1,10 @@
 /*global window,document*/
 'use strict';
-var classie = require('./classie'),
+var classie = require('../vendor/classie'),
 	Modernizr = require('../vendor/modernizr'),
 	extend = require('util-extend'),
 	Queue = require('./queue'),
-	Injector = require('./injector').Injector,
+	Injector = require('./injector'),
 	docElem = window.document.documentElement,
 	support = {
 		animations: Modernizr.cssanimations
@@ -32,8 +32,6 @@ function NotificationFx(options, Queue) {
 	extend(this.options, options);
 	this._init();
 }
-Injector.register(NotificationFx, Queue);
-Injector.resolve(NotificationFx);
 
 /**
  * NotificationFx options
@@ -98,6 +96,7 @@ NotificationFx.prototype._init = function () {
 	// init events
 	this._initEvents();
 };
+
 
 /**
  * init events
