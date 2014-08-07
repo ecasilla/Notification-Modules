@@ -1,7 +1,7 @@
 {
   "launch_in_dev" : ["Mocha","Chrome"],
   "launch_in_ci": ["Coverage","Chrome","Firefox","Safari","Mocha"],
-  "framework": "mocha",
+  "framework": "mocha+chai",
   "launchers": {
     "Mocha": {
       "command": "mocha test/browserified.js -c -s 1000 -R spec -u bdd -t 3000 --inline-diffs "

@@ -83,68 +83,6 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		imagemin: {
-			png: {
-				options: {
-					optimizationLevel: 7
-				},
-				files: [{
-					expand: true,
-					cwd: 'app/images/',
-					src: ['**/*.png'],
-					dest: 'dist/images',
-					ext: '.png'
-				}]
-			},
-			jpg: {
-				options: {
-					progressive: true,
-					optimizationLevel: 7
-				},
-				files: [{
-					expand: true,
-					cwd: 'app/images/',
-					src: ["**/*.jpg"],
-					dest: 'dist/images',
-					ext: '.jpg'
-				}]
-			},
-			svgmin: {
-				options: {
-					optimizationLevel: 7,
-					plugins: [{
-							removeViewBox: false
-						}, // don't remove the viewbox atribute from the SVG
-						{
-							removeUselessStrokeAndFill: false
-						}, // don't remove Useless Strokes and Fills
-						{
-							removeEmptyAttrs: false
-						} // don't remove Empty Attributes from the SVG
-					]
-				},
-				files: [{
-					expand: true,
-					cwd: 'app/images/',
-					src: ['**/*.svg'],
-					dest: 'dist/images',
-					ext: '.svg'
-				}]
-			},
-			gif: {
-				options: {
-					optimizationLevel: 7,
-					interlaced: true
-				},
-				files: [{
-					expand: true,
-					cwd: 'app/images/',
-					src: ['**/*.gif'],
-					dest: 'dist/images',
-					ext: '.gif'
-				}]
-			},
-		},
 		template: {
 			dev: {
 				files: [{
@@ -312,10 +250,6 @@ module.exports = function (grunt) {
 			jsbeautifier: {
 				files: '<%= jsbeautifier.files %>',
 				tasks: ['newer:jsbeautifier']
-			},
-			images: {
-				files: ['app/images/**/*.*'],
-				tasks: ['newer:imagemin']
 			}
 		},
 
@@ -346,6 +280,6 @@ module.exports = function (grunt) {
 	grunt.registerTask('test', ['newer:browserify:test']);
 	grunt.registerTask('coverage', ['mocha_istanbul', "plato"]);
 	grunt.registerTask('teste2e', ['concurrent:target2']);
-	grunt.registerTask('prod', ['jshint', 'imagemin', 'uglify', 'less:production', 'template:production', 'copy', 'connect:server:keepalive']);
+	grunt.registerTask('prod', ['jshint', 'uglify', 'less:production', 'template:production', 'copy', 'connect:server:keepalive']);
 
 }; //grunt exports

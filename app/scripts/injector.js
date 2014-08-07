@@ -1,5 +1,7 @@
 var Injector = {
+
 	dependencies: {},
+
 	register: function (key, value) {
 		this.dependencies[key] = value;
 	},

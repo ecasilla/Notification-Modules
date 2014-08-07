@@ -41,5 +41,9 @@
     "jshint-stylish": "^0.2.0",
     "mocha": "^1.21.0",
     "testem": "^0.6.16"
+  },
+  "dependencies": {
+    "util": "^0.10.3",
+    "util-extend": "^1.0.1"
   }
 }

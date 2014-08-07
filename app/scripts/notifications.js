@@ -1,7 +1,7 @@
 /*global window,document*/
 'use strict';
 var classie = require('../vendor/classie'),
-	Modernizr = require('../vendor/modernizr'),
+	//Modernizr = require('../vendor/modernizr.custom.js'),
 	extend = require('util-extend'),
 	Queue = require('./queue'),
 	Injector = require('./injector'),
