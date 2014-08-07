@@ -1,0 +1,1 @@
+var injector = require('../../app/scripts/injector.js');

@@ -1,0 +1,10 @@
+{
+	"dev":{
+			"main_css_path" : "/styles/main.min.css",
+			"main_js_path": "/scripts/bundle.js"
+		},
+	"production":{
+			"main_css_path" : "/styles/main.min.css",
+			"main_js_path": "/scripts/bundle.min.js"
+	}
+}
