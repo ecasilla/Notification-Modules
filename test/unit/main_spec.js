@@ -1,1 +1,1 @@
-var main = require('../../app/scripts/main.js');
+//var main = require('../../app/scripts/main.js');

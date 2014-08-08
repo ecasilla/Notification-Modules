@@ -1,1 +1,1 @@
-var notifications = require('../../app/scripts/notifications.js');
+//var notifications = require('../../app/scripts/notifications.js');
