@@ -1,7 +1,7 @@
 /*global window,document*/
 'use strict';
 var classie = require('../vendor/classie'),
-	//Modernizr = require('../vendor/modernizr.custom.js'),
+	Modernizr = require('../vendor/modernizr.custom.js'),
 	extend = require('util-extend'),
 	Queue = require('./queue'),
 	Injector = require('./injector'),
@@ -19,24 +19,19 @@ var classie = require('../vendor/classie'),
 	animEndEventName = animEndEventNames[Modernizr.prefixed('animation')];
 
 /**
- * extend obj function
+ * Notification function
  */
 
-
-/**
- * NotificationFx function
- */
-
-function NotificationFx(options, Queue) {
+function Notification(options, Queue) {
 	this.options = extend({}, this.options);
 	extend(this.options, options);
 	this._init();
 }
 
 /**
- * NotificationFx options
+ * Notification options
  */
-NotificationFx.prototype.options = {
+Notification.prototype.options = {
 	// element to which the notification will be appended
 	// defaults to the document.body
 	wrapper: document.body,
@@ -72,7 +67,7 @@ NotificationFx.prototype.options = {
  * init function
  * initialize and cache some vars
  */
-NotificationFx.prototype._init = function () {
+Notification.prototype._init = function () {
 	// create HTML structure
 	this.ntf = document.createElement('div');
 	this.ntf.className = 'ns-box ns-' + this.options.layout + ' ns-effect-' + this.options.effect + ' ns-type-' + this.options.type;
@@ -101,7 +96,7 @@ NotificationFx.prototype._init = function () {
 /**
  * init events
  */
-NotificationFx.prototype._initEvents = function () {
+Notification.prototype._initEvents = function () {
 	var self = this;
 	// dismiss notification
 	this.ntf.querySelector('.ns-close').addEventListener('click', function () {
@@ -112,7 +107,7 @@ NotificationFx.prototype._initEvents = function () {
 /**
  * show the notification
  */
-NotificationFx.prototype.show = function () {
+Notification.prototype.show = function () {
 	this.active = true;
 	classie.remove(this.ntf, 'ns-hide');
 	classie.add(this.ntf, 'ns-show');
@@ -122,7 +117,7 @@ NotificationFx.prototype.show = function () {
 /**
  * dismiss the notification
  */
-NotificationFx.prototype.dismiss = function () {
+Notification.prototype.dismiss = function () {
 	var self = this;
 	this.active = false;
 	clearTimeout(this.dismissttl);
@@ -156,4 +151,4 @@ NotificationFx.prototype.dismiss = function () {
 /**
  * add to global namespace
  */
-//window.NotificationFx = NotificationFx;
+module.exports = Notification;

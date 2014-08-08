@@ -1,30 +1,28 @@
+var Node = require('./node.js'),
+	Injector = require('./injector.js');
+
 var Queue = function () {
 	this.first = null;
 	this.size = 0;
 };
 
-var Node = function (data) {
-	this.data = data;
-	this.next = null;
-};
-
-Queue.prototype.enqueue = function (data) {
-	var node = new Node(data),
-		n;
+Queue.prototype.enqueue = function (data, Node) {
+	this.node = Node(data);
+	var n;
 
 	if (!this.first) {
-		this.first = node;
+		this.first = this.node;
 	}
 	else {
 		n = this.first;
 		while (n.next) {
 			n = n.next;
 		}
-		n.next = node;
+		n.next = this.node;
 	}
 
 	this.size += 1;
-	return node;
+	return this.node;
 };
 
 Queue.prototype.dequeue = function () {

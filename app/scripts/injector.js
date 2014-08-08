@@ -28,3 +28,5 @@ var Injector = {
 		};
 	}
 };
+
+module.exports = Injector;

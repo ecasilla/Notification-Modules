@@ -234,7 +234,7 @@ module.exports = function (grunt) {
 			},
 			browserify: {
 				files: ['app/scripts/*.js', 'test/unit/**/*.js'],
-				tasks: ['newer:browserify', 'newer:uglify']
+				tasks: ['browserify', 'uglify']
 			},
 			copySpec: {
 				files: ['app/scripts/**/*.js'],
