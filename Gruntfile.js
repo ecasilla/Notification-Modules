@@ -22,20 +22,39 @@ module.exports = function (grunt) {
 		},
 
 		browserify: {
+			options: {
+				debug: true
+			},
 			dev: {
 				files: {
 					'dist/scripts/bundle.js': ['app/scripts/main.js']
 				},
 				options: {
-					debug: true
+					external: [
+						'app/scripts/vendor/classie.js'
+					],
+					preBundle: function (b) {
+						b.plugin(remapify, [{
+							src: 'app/scripts/**/*.js',
+							expose: 'scripts'
+						}])
+					}
+				}
+			},
+			vendor: {
+				src: ['app/vendor/**/*.js'],
+				dest: 'dest/vendor/**/*.js',
+				options: {
+					alias: [
+						'../vendor/classie.js:classie',
+						'../vendor/jQuery.min.js:jQuery'
+					],
+					external: null
 				}
 			},
 			test: {
 				files: {
 					'test/browserified.js': ['test/unit/**/*.js'],
-				},
-				options: {
-					debug: true
 				}
 			}
 		},
@@ -234,7 +253,7 @@ module.exports = function (grunt) {
 			},
 			browserify: {
 				files: ['app/scripts/*.js', 'test/unit/**/*.js'],
-				tasks: ['browserify', 'uglify']
+				tasks: ['browserify', 'browserify:vendor', 'uglify']
 			},
 			copySpec: {
 				files: ['app/scripts/**/*.js'],

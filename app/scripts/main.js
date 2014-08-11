@@ -1,18 +1,18 @@
-/*global document*/
-var classie = require('../vendor/classie.js'),
-	Modernizr = require('../vendor/modernizr.custom.js'),
-	Notification = require('./notifications.js');
-var bttn = document.getElementById('notification-trigger');
+/*global document, window */
+var Notification = require('./notifications.js'),
+	classie = window.classie,
+	bttn = document.getElementById('notification-trigger');
+console.log('bttn');
 
 // make sure..
 bttn.disabled = false;
 
 bttn.addEventListener('click', function () {
 	// simulate loading (for demo purposes only)
-	classie.add(bttn, 'active');
+	window.classie.add(bttn, 'active');
 	setTimeout(function () {
 
-		classie.remove(bttn, 'active');
+		window.classie.remove(bttn, 'active');
 
 		// create the notification
 		var notification = new Notification({

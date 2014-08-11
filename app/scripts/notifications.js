@@ -1,28 +1,15 @@
 /*global window,document*/
 'use strict';
-var classie = require('../vendor/classie'),
-	Modernizr = require('../vendor/modernizr.custom.js'),
+var classie = require('classie'),
 	extend = require('util-extend'),
 	Queue = require('./queue'),
 	Injector = require('./injector'),
-	docElem = window.document.documentElement,
-	support = {
-		animations: Modernizr.cssanimations
-	},
-	animEndEventNames = {
-		'WebkitAnimation': 'webkitAnimationEnd',
-		'OAnimation': 'oAnimationEnd',
-		'msAnimation': 'MSAnimationEnd',
-		'animation': 'animationend'
-	},
-	//animation end event name
-	animEndEventName = animEndEventNames[Modernizr.prefixed('animation')];
-
+	docElem = window.document.documentElement;
 /**
  * Notification function
  */
 
-function Notification(options, Queue) {
+function Notification(options) {
 	this.options = extend({}, this.options);
 	extend(this.options, options);
 	this._init();
@@ -50,7 +37,7 @@ Notification.prototype.options = {
 	type: 'notice',
 	// if the user doesn´t close the notification then we remove it 
 	// after the following time
-	ttl: 4000,
+	timeout: 4000,
 	// callbacks
 	onClose: function () {
 		return false;
@@ -69,27 +56,29 @@ Notification.prototype.options = {
  */
 Notification.prototype._init = function () {
 	// create HTML structure
-	this.ntf = document.createElement('div');
-	this.ntf.className = 'ns-box ns-' + this.options.layout + ' ns-effect-' + this.options.effect + ' ns-type-' + this.options.type;
+	this.notification = document.createElement('div');
+	this.notification.className = 'ns-box ns-' + this.options.layout + ' ns-effect-' + this.options.effect + ' ns-type-' + this.options.type;
 	var strinner = '<div class="ns-box-inner">';
 	strinner += this.options.message;
 	strinner += '</div>';
 	strinner += '<span class="ns-close"></span></div>';
-	this.ntf.innerHTML = strinner;
+	this.notification.innerHTML = strinner;
 
 	// append to body or the element specified in options.wrapper
-	this.options.wrapper.insertBefore(this.ntf, this.options.wrapper.firstChild);
+	this.options.wrapper.insertBefore(this.notification, this.options.wrapper.firstChild);
 
-	// dismiss after [options.ttl]ms
+	// dismiss after [options.timeout]ms
 	var self = this;
-	this.dismissttl = setTimeout(function () {
+	this.dismisstimeout = setTimeout(function () {
 		if (self.active) {
 			self.dismiss();
 		}
-	}, this.options.ttl);
+	}, this.options.timeout);
 
 	// init events
 	this._initEvents();
+
+	extend(classie, window.classie);
 };
 
 
@@ -99,7 +88,7 @@ Notification.prototype._init = function () {
 Notification.prototype._initEvents = function () {
 	var self = this;
 	// dismiss notification
-	this.ntf.querySelector('.ns-close').addEventListener('click', function () {
+	this.notification.querySelector('.ns-close').addEventListener('click', function () {
 		self.dismiss();
 	});
 };
@@ -109,8 +98,8 @@ Notification.prototype._initEvents = function () {
  */
 Notification.prototype.show = function () {
 	this.active = true;
-	classie.remove(this.ntf, 'ns-hide');
-	classie.add(this.ntf, 'ns-show');
+	classie.remove(this.notification, 'ns-hide');
+	classie.add(this.notification, 'ns-show');
 	this.options.onOpen();
 };
 
@@ -120,8 +109,8 @@ Notification.prototype.show = function () {
 Notification.prototype.dismiss = function () {
 	var self = this;
 	this.active = false;
-	clearTimeout(this.dismissttl);
-	classie.remove(this.ntf, 'ns-show');
+	clearTimeout(this.dismisstimeout);
+	classie.remove(this.notification, 'ns-show');
 	setTimeout(function () {
 		classie.add(self.ntf, 'ns-hide');
 
@@ -131,21 +120,14 @@ Notification.prototype.dismiss = function () {
 
 	// after animation ends remove ntf from the DOM
 	var onEndAnimationFn = function (ev) {
-		if (support.animations) {
-			if (ev.target !== self.ntf) {
-				return false;
-			}
-			this.removeEventListener(animEndEventName, onEndAnimationFn);
-		}
+		//if (support.animations) {
+		//if (ev.target !== self.ntf) {
+		//return false;
+		//}
+		//this.removeEventListener(animEndEventName, onEndAnimationFn);
+		//}
 		self.options.wrapper.removeChild(this);
 	};
-
-	if (support.animations) {
-		this.ntf.addEventListener(animEndEventName, onEndAnimationFn);
-	}
-	else {
-		onEndAnimationFn();
-	}
 };
 
 /**

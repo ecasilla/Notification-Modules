@@ -10,6 +10,10 @@ StackQueue.prototype.push = function (data) {
 	this.length++;
 };
 
+StackQueue.prototype.getNext = function () {
+	return this.list.end.data;
+};
+
 StackQueue.prototype.pop = function () {
 	if (this.isEmpty()) {
 		throw "The stack/queue is empty";
